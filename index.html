@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D4RIY | Веб-разработчик</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* --- 1. Глобальные настройки --- */
+        :root {
+            --bg-body: #0a0a0a;
+            --bg-card: #141414;
+            --bg-card-hover: #1c1c1c;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --accent: #3b82f6;
+            
+            /* Градиенты */
+            --grad-berry: linear-gradient(135deg, #ff4d4d 0%, #c70039 100%);
+            --grad-bakery: linear-gradient(135deg, #f5af19 0%, #f12711 100%);
+            --grad-photo: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+            --grad-barber: linear-gradient(135deg, #434343 0%, #000000 100%);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Manrope', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; padding: 0; }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* --- Header --- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 15px 0;
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: -1px;
+            background: linear-gradient(to right, #fff, #888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .tg-btn {
+            background: var(--accent);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+        .tg-btn:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5); 
+        }
+
+        /* --- Hero --- */
+        .hero {
+            padding: 160px 0 80px;
+            text-align: center;
+            background: radial-gradient(circle at center, rgba(59, 130, 246, 0.1) 0%, transparent 60%);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            background: linear-gradient(to bottom, #fff, #999);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .skills-bar {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .skill-tag {
+            padding: 6px 14px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #ccc;
+            font-size: 0.85rem;
+        }
+
+        /* --- Grid --- */
+        .projects-section { padding: 50px 0 100px; }
+        
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 40px;
+            border-left: 4px solid var(--accent);
+            padding-left: 15px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255,255,255,0.2);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            background: var(--bg-card-hover);
+        }
+
+        .card-logo-area {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .glow-bg {
+            position: absolute;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            filter: blur(50px);
+            opacity: 0.3;
+            transition: 0.5s;
+        }
+        .card:hover .glow-bg { opacity: 0.6; width: 170px; height: 170px; }
+
+        .svg-icon {
+            width: 80px;
+            height: 80px;
+            z-index: 2;
+            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.3));
+            transition: 0.4s;
+        }
+        .card:hover .svg-icon { transform: scale(1.1) rotate(-3deg); }
+
+        .card-body {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-title { font-size: 1.5rem; margin: 0 0 10px; font-weight: 700; color: #fff; }
+        .card-desc { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 25px; flex-grow: 1; }
+
+        .btn-visit {
+            display: block;
+            text-align: center;
+            padding: 14px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.05);
+            color: #fff;
+            font-weight: 700;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: 0.2s;
+        }
+        .btn-visit:hover { background: white; color: black; }
+
+        footer {
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            color: #555;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container nav-wrapper">
+            <a href="#" class="logo">D4RIY.DEV</a>
+            <a href="https://t.me/D4RIY" target="_blank" class="tg-btn">Связаться @D4RIY</a>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <section class="hero">
+            <h1>Создаю цифровые продукты,<br>которые продают.</h1>
+            <p>Front-end разработка • UI/UX Дизайн • E-commerce решения</p>
+            <div class="skills-bar">
+                <span class="skill-tag">HTML5</span>
+                <span class="skill-tag">CSS3</span>
+                <span class="skill-tag">JavaScript</span>
+                <span class="skill-tag">Responsive Design</span>
+            </div>
+        </section>
+
+        <section class="projects-section">
+            <h2 class="section-title">Портфолио</h2>
+            <div class="grid">
+
+                <article class="card">
+                    <div class="card-logo-area">
+                        <div class="glow-bg" style="background: var(--grad-berry);"></div>
+                        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"/>
+                            <path d="M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1"/>
+                            <path d="M2 21h20"/>
+                            <path d="M7 8v2"/>
+                            <path d="M12 8v2"/>
+                            <path d="M17 8v2"/>
+                            <path d="M7 4h.01" stroke-width="2"/>
+                            <path d="M12 4h.01" stroke-width="2"/>
+                            <path d="M17 4h.01" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Ягодка Bakery</h3>
+                        <p class="card-desc">Сайт кондитера. Витрина авторских тортов и десертов. "Вкусный" дизайн в ягодных тонах.</p>
+                        <a href="https://yagodkabakery.42web.io/" target="_blank" class="btn-visit">Открыть сайт</a>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <div class="card-logo-area">
+                        <div class="glow-bg" style="background: var(--grad-bakery);"></div>
+                        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 9.08 0A5.11 5.11 0 0 1 18.59 6 4 4 0 0 1 20 13.87V21H6Z" />
+                            <line x1="6" y1="17" x2="20" y2="17" />
+                        </svg>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Свежая Выпечка</h3>
+                        <p class="card-desc">Полнофункциональный магазин пекарни. JS-корзина, калькулятор стоимости и онлайн-заказ.</p>
+                        <a href="https://sait12144.xo.je/" target="_blank" class="btn-visit">Открыть сайт</a>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <div class="card-logo-area">
+                        <div class="glow-bg" style="background: var(--grad-photo);"></div>
+                        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
+                            <circle cx="12" cy="13" r="3"/>
+                        </svg>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Portfolio: Photo</h3>
+                        <p class="card-desc">Сайт для фотографа. Минималистичная галерея работ, описание услуг и форма для записи.</p>
+                        <a href="https://photooooo.xo.je/" target="_blank" class="btn-visit">Открыть сайт</a>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <div class="card-logo-area">
+                        <div class="glow-bg" style="background: var(--grad-barber);"></div>
+                        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="6" cy="6" r="3" />
+                            <circle cx="6" cy="18" r="3" />
+                            <line x1="20" y1="4" x2="8.12" y2="15.88" />
+                            <line x1="20" y1="20" x2="8.12" y2="8.12" />
+                        </svg>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Blade & Ink</h3>
+                        <p class="card-desc">Стильный сайт барбершопа. Темная тема, прайс-лист услуг и информация о мастерах.</p>
+                        <a href="https://bladeandink.ct.ws/" target="_blank" class="btn-visit">Открыть сайт</a>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>© 2023 D4RIY Development. Все права защищены.</p>
+        <p>Telegram: <a href="https://t.me/D4RIY" style="color:var(--accent);">@D4RIY</a></p>
+    </footer>
+
+</body>
+</html>
