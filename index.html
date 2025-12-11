@@ -3,328 +3,263 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>D4RIY | Веб-разработчик</title>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;500;700;800&display=swap" rel="stylesheet">
-    <style>
-        /* --- 1. Глобальные настройки --- */
-        :root {
-            --bg-body: #0a0a0a;
-            --bg-card: #141414;
-            --bg-card-hover: #1c1c1c;
-            --text-main: #ffffff;
-            --text-muted: #888888;
-            --accent: #3b82f6;
-            
-            /* Градиенты */
-            --grad-berry: linear-gradient(135deg, #ff4d4d 0%, #c70039 100%);
-            --grad-bakery: linear-gradient(135deg, #f5af19 0%, #f12711 100%);
-            --grad-photo: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
-            --grad-barber: linear-gradient(135deg, #434343 0%, #000000 100%);
-        }
-
-        * { box-sizing: border-box; }
-
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Manrope', sans-serif;
-            background-color: var(--bg-body);
-            color: var(--text-main);
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
-
-        a { text-decoration: none; color: inherit; transition: 0.3s; }
-        ul { list-style: none; padding: 0; }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* --- Header --- */
-        header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            padding: 15px 0;
-            background: rgba(10, 10, 10, 0.85);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .nav-wrapper {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-weight: 800;
-            font-size: 1.5rem;
-            letter-spacing: -1px;
-            background: linear-gradient(to right, #fff, #888);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .tg-btn {
-            background: var(--accent);
-            color: white;
-            padding: 10px 24px;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
-        }
-        .tg-btn:hover { 
-            transform: translateY(-2px); 
-            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5); 
-        }
-
-        /* --- Hero --- */
-        .hero {
-            padding: 160px 0 80px;
-            text-align: center;
-            background: radial-gradient(circle at center, rgba(59, 130, 246, 0.1) 0%, transparent 60%);
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            line-height: 1.1;
-            margin-bottom: 20px;
-            background: linear-gradient(to bottom, #fff, #999);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto 40px;
-        }
-
-        .skills-bar {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .skill-tag {
-            padding: 6px 14px;
-            border-radius: 20px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: #ccc;
-            font-size: 0.85rem;
-        }
-
-        /* --- Grid --- */
-        .projects-section { padding: 50px 0 100px; }
-        
-        .section-title {
-            font-size: 2rem;
-            margin-bottom: 40px;
-            border-left: 4px solid var(--accent);
-            padding-left: 15px;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .card {
-            background: var(--bg-card);
-            border-radius: 20px;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(255,255,255,0.2);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-            background: var(--bg-card-hover);
-        }
-
-        .card-logo-area {
-            height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .glow-bg {
-            position: absolute;
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            filter: blur(50px);
-            opacity: 0.3;
-            transition: 0.5s;
-        }
-        .card:hover .glow-bg { opacity: 0.6; width: 170px; height: 170px; }
-
-        .svg-icon {
-            width: 80px;
-            height: 80px;
-            z-index: 2;
-            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.3));
-            transition: 0.4s;
-        }
-        .card:hover .svg-icon { transform: scale(1.1) rotate(-3deg); }
-
-        .card-body {
-            padding: 25px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card-title { font-size: 1.5rem; margin: 0 0 10px; font-weight: 700; color: #fff; }
-        .card-desc { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 25px; flex-grow: 1; }
-
-        .btn-visit {
-            display: block;
-            text-align: center;
-            padding: 14px;
-            border-radius: 12px;
-            background: rgba(255,255,255,0.05);
-            color: #fff;
-            font-weight: 700;
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: 0.2s;
-        }
-        .btn-visit:hover { background: white; color: black; }
-
-        footer {
-            padding: 40px 0;
-            text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            color: #555;
-            font-size: 0.9rem;
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.2rem; }
-            .grid { grid-template-columns: 1fr; }
-        }
-    </style>
+    <title>ASHENOV GYM | Персональный тренинг</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
-    <header>
-        <div class="container nav-wrapper">
-            <a href="#" class="logo">D4RIY.DEV</a>
-            <a href="https://t.me/D4RIY" target="_blank" class="tg-btn">Связаться @D4RIY</a>
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo">ASHENOV<span>GYM</span></a>
+            <ul class="nav-links">
+                <li><a href="#about">Методика</a></li>
+                <li><a href="#process">Этапы</a></li>
+                <li><a href="#services">Тарифы</a></li>
+                <li><a href="#faq">Вопросы</a></li>
+                <li><a href="#contact-form" class="btn-nav">Записаться</a></li>
+            </ul>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="overlay"></div>
+        <div class="hero-content">
+            <h1>Построй тело <br>в стиле <span>Ashenov</span></h1>
+            <p>Профессиональная система тренировок и питания. Мы не просто качаем мышцы — мы меняем образ жизни и мышление.</p>
+            <div class="hero-btns">
+                <a href="#contact-form" class="btn-main">Начать сейчас</a>
+                <a href="#about" class="btn-outline">Узнать методику</a>
+            </div>
         </div>
     </header>
 
-    <div class="container">
-        
-        <section class="hero">
-            <h1>Создаю цифровые продукты,<br>которые продают.</h1>
-            <p>Front-end разработка • UI/UX Дизайн • E-commerce решения</p>
-            <div class="skills-bar">
-                <span class="skill-tag">HTML5</span>
-                <span class="skill-tag">CSS3</span>
-                <span class="skill-tag">JavaScript</span>
-                <span class="skill-tag">Responsive Design</span>
+    <section id="about" class="about section-padding">
+        <div class="container about-grid">
+            <div class="about-img">
+                <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=1000&auto=format&fit=crop" alt="Тренер Ashenov Gym">
             </div>
-        </section>
+            <div class="about-text">
+                <h2 class="section-title">Система <span>ASHENOV</span></h2>
+                <h3>Больше, чем просто фитнес</h3>
+                <p>В Ashenov Gym мы не верим в случайности. Каждый подход, каждый повтор и каждый грамм в вашей тарелке имеет значение. Моя методика основана на трех китах:</p>
+                
+                <ul class="methodology-list">
+                    <li><i class="fas fa-brain"></i> <strong>Осознанность:</strong> Полный контроль техники (Mind-Muscle connection).</li>
+                    <li><i class="fas fa-dna"></i> <strong>Биомеханика:</strong> Тренировки без травм, с учетом анатомии.</li>
+                    <li><i class="fas fa-chart-line"></i> <strong>Прогрессия:</strong> Постоянное увеличение нагрузок для роста.</li>
+                </ul>
 
-        <section class="projects-section">
-            <h2 class="section-title">Портфолио</h2>
-            <div class="grid">
-
-                <article class="card">
-                    <div class="card-logo-area">
-                        <div class="glow-bg" style="background: var(--grad-berry);"></div>
-                        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"/>
-                            <path d="M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1"/>
-                            <path d="M2 21h20"/>
-                            <path d="M7 8v2"/>
-                            <path d="M12 8v2"/>
-                            <path d="M17 8v2"/>
-                            <path d="M7 4h.01" stroke-width="2"/>
-                            <path d="M12 4h.01" stroke-width="2"/>
-                            <path d="M17 4h.01" stroke-width="2"/>
-                        </svg>
+                <div class="achievements">
+                    <div class="achievement-item">
+                        <span class="number">7+</span>
+                        <span class="desc">Лет практики</span>
                     </div>
-                    <div class="card-body">
-                        <h3 class="card-title">Ягодка Bakery</h3>
-                        <p class="card-desc">Сайт кондитера. Витрина авторских тортов и десертов. "Вкусный" дизайн в ягодных тонах.</p>
-                        <a href="https://yagodkabakery.42web.io/" target="_blank" class="btn-visit">Открыть сайт</a>
+                    <div class="achievement-item">
+                        <span class="number">500+</span>
+                        <span class="desc">Атлетов</span>
                     </div>
-                </article>
-
-                <article class="card">
-                    <div class="card-logo-area">
-                        <div class="glow-bg" style="background: var(--grad-bakery);"></div>
-                        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 9.08 0A5.11 5.11 0 0 1 18.59 6 4 4 0 0 1 20 13.87V21H6Z" />
-                            <line x1="6" y1="17" x2="20" y2="17" />
-                        </svg>
+                    <div class="achievement-item">
+                        <span class="number">100%</span>
+                        <span class="desc">Результат</span>
                     </div>
-                    <div class="card-body">
-                        <h3 class="card-title">Свежая Выпечка</h3>
-                        <p class="card-desc">Полнофункциональный магазин пекарни. JS-корзина, калькулятор стоимости и онлайн-заказ.</p>
-                        <a href="https://sait12144.xo.je/" target="_blank" class="btn-visit">Открыть сайт</a>
-                    </div>
-                </article>
-
-                <article class="card">
-                    <div class="card-logo-area">
-                        <div class="glow-bg" style="background: var(--grad-photo);"></div>
-                        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
-                            <circle cx="12" cy="13" r="3"/>
-                        </svg>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">Portfolio: Photo</h3>
-                        <p class="card-desc">Сайт для фотографа. Минималистичная галерея работ, описание услуг и форма для записи.</p>
-                        <a href="https://photooooo.xo.je/" target="_blank" class="btn-visit">Открыть сайт</a>
-                    </div>
-                </article>
-
-                <article class="card">
-                    <div class="card-logo-area">
-                        <div class="glow-bg" style="background: var(--grad-barber);"></div>
-                        <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="6" cy="6" r="3" />
-                            <circle cx="6" cy="18" r="3" />
-                            <line x1="20" y1="4" x2="8.12" y2="15.88" />
-                            <line x1="20" y1="20" x2="8.12" y2="8.12" />
-                        </svg>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">Blade & Ink</h3>
-                        <p class="card-desc">Стильный сайт барбершопа. Темная тема, прайс-лист услуг и информация о мастерах.</p>
-                        <a href="https://bladeandink.ct.ws/" target="_blank" class="btn-visit">Открыть сайт</a>
-                    </div>
-                </article>
-
+                </div>
             </div>
-        </section>
-    </div>
+        </div>
+    </section>
 
-    <footer>
-        <p>© 2023 D4RIY Development. Все права защищены.</p>
-        <p>Telegram: <a href="https://t.me/D4RIY" style="color:var(--accent);">@D4RIY</a></p>
+    <section id="process" class="process section-padding">
+        <div class="container">
+            <h2 class="section-title text-center">Как мы <span>работаем</span></h2>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">01</div>
+                    <h3>Анкетирование</h3>
+                    <p>Ты заполняешь подробную анкету о здоровье, режиме дня, пищевых привычках и целях.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">02</div>
+                    <h3>Стратегия</h3>
+                    <p>Я разрабатываю индивидуальный план тренировок и рассчитываю твой КБЖУ.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">03</div>
+                    <h3>Трансформация</h3>
+                    <p>Мы начинаем работу. Еженедельные отчеты, замеры и коррекция программы.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">04</div>
+                    <h3>Результат</h3>
+                    <p>Фиксация формы «После». Закрепление привычек для удержания веса.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="services section-padding">
+        <div class="container">
+            <h2 class="section-title text-center">Выбери свой <span>уровень</span></h2>
+            <div class="pricing-grid">
+                <div class="price-card">
+                    <div class="card-header">
+                        <h3>Online Start</h3>
+                        <span class="price">35.000 ₸</span>
+                    </div>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Программа тренировок (зал/дом)</li>
+                        <li><i class="fas fa-check"></i> План питания</li>
+                        <li><i class="fas fa-times" style="color:#555"></i> Чат поддержки 24/7</li>
+                    </ul>
+                    <a href="#contact-form" class="btn-card">Выбрать</a>
+                </div>
+
+                <div class="price-card featured">
+                    <div class="tag">ВЫБОР ASHENOV</div>
+                    <div class="card-header">
+                        <h3>Pro Mentoring</h3>
+                        <span class="price">70.000 ₸</span>
+                    </div>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Полное ведение</li>
+                        <li><i class="fas fa-check"></i> Разбор анализов</li>
+                        <li><i class="fas fa-check"></i> Ежедневные отчеты</li>
+                        <li><i class="fas fa-check"></i> Проверка техники по видео</li>
+                    </ul>
+                    <a href="#contact-form" class="btn-card btn-gold">Начать работу</a>
+                </div>
+
+                <div class="price-card">
+                    <div class="card-header">
+                        <h3>Personal Offline</h3>
+                        <span class="price">150.000 ₸</span>
+                    </div>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Личные тренировки в Алматы</li>
+                        <li><i class="fas fa-check"></i> Контроль каждого повторения</li>
+                        <li><i class="fas fa-check"></i> Постановка позирования</li>
+                    </ul>
+                    <a href="#contact-form" class="btn-card">Выбрать</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="faq section-padding">
+        <div class="container">
+            <h2 class="section-title text-center">Ответы на <span>вопросы</span></h2>
+            <div class="accordion">
+                <div class="accordion-item">
+                    <button class="accordion-header">Я совсем новичок, мне подойдет?</button>
+                    <div class="accordion-body">
+                        Да. Система ASHENOV GYM адаптируется под любой уровень. Мы начнем с базы, поставим технику и укрепим связки, прежде чем переходить к большим весам.
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header">Можно ли тренироваться дома?</button>
+                    <div class="accordion-body">
+                        Конечно. Я составлю программу под тот инвентарь, который у вас есть (гантели, резинки) или для работы с собственным весом.
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header">Нужно ли голодать?</button>
+                    <div class="accordion-body">
+                        Категорически нет. Голод убивает метаболизм и мышцы. Мы будем есть вкусно, сбалансировано и много, но правильные продукты.
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header">У меня есть грыжа/протрузия, можно?</button>
+                    <div class="accordion-body">
+                        При наличии медицинских ограничений мы исключаем осевые нагрузки. Однако, перед началом тренировок обязательна консультация вашего врача.
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header">Как быстро я увижу результат?</button>
+                    <div class="accordion-body">
+                        Первые изменения в самочувствии — через неделю. Визуальные изменения — через 4-6 недель соблюдения режима.
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header">Как происходит оплата?</button>
+                    <div class="accordion-body">
+                        Оплата производится переводом на Kaspi Gold. После оплаты вы получаете доступ к личному кабинету или анкете.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="calculator-section section-padding">
+        <div class="container">
+            <h2 class="section-title text-center">Оцени свою форму</h2>
+            <div class="calc-box">
+                <h3>Калькулятор ИМТ</h3>
+                <div class="inputs">
+                    <input type="number" id="weight" placeholder="Вес (кг)">
+                    <input type="number" id="height" placeholder="Рост (см)">
+                </div>
+                <button onclick="calculateBMI()" class="btn-main">Рассчитать</button>
+                <div class="result" id="bmi-result">0.0</div>
+                <p class="message" id="bmi-message">Введите данные</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact-form" class="contact-section section-padding">
+        <div class="container">
+            <div class="form-wrapper">
+                <h2 class="text-center">Готов к <span>изменениям?</span></h2>
+                <p class="text-center" style="margin-bottom: 30px; color: #ccc;">Оставь заявку, и мы свяжемся для консультации.</p>
+                <form id="leadForm">
+                    <div class="input-group">
+                        <input type="text" placeholder="Ваше имя" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="tel" placeholder="Номер телефона" required>
+                    </div>
+                    <div class="input-group">
+                        <select>
+                            <option>Цель: Похудение</option>
+                            <option>Цель: Набор массы</option>
+                            <option>Цель: Подготовка к соревнованиям</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-main full-width">Отправить заявку</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-left">
+                <a href="#" class="logo">ASHENOV<span>GYM</span></a>
+                <p style="margin-top: 10px; color: #777;">Премиальный фитнес-коучинг.</p>
+            </div>
+            <div class="footer-center">
+                <h3>Контакты</h3>
+                <p>+7 (777) 123-45-67</p>
+                <p>info@ashenov-gym.kz</p>
+            </div>
+            <div class="footer-right">
+                <h3>Мы в соцсетях</h3>
+                <div class="socials">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright text-center">
+            <p>© 2025 Ashenov Gym. Developed by D4RIY.DEV</p>
+        </div>
     </footer>
 
+    <script src="script.js"></script>
 </body>
 </html>
